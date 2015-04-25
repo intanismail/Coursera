@@ -32,4 +32,7 @@ measurement names
 - Compute the average of each variable for each subject and each activity to
 produce tidy data set
 - Order the data set by subject and activity
+- The tidy data set (td) data frame demension is 180x68; where there are 30 
+subjects and 6 activities that equal to 180 rows and 1 subject, 1 activity and
+66 features variables that equal to 68 columns.
 - Write the output to the result.txt file 
