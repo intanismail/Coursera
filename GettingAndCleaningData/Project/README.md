@@ -3,21 +3,22 @@ Getting and Cleaning Data
 
 This is a README file for Getting and Cleaning Data Coursera course project.
 
-Here are the data for the project: 
+Below is the link to the data for the project: 
 
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
 
 How to run the run_analysis.R script
 ************************************
 
-1. The data has been downloaded and can be found under Project/data directory. 
+1. The data has been downloaded and can be found under /data directory. 
 
-2. Copy this directory to your local directory i.e, Project/data or donwnload 
-the data as mentioned above and unzip it to i.e, Project/data directory.
+2. Copy this directory to your local /data directory or donwnload 
+the data as mentioned above and unzip it to /data directory.
 
-2. Copy run_analysis.R to the Project directory
+2. Copy run_analysis.R to the same folder where you copy the /data directroy
 
-3. Set working directory to Project directory in RStudio
+3. Set working directory in RStudio to the same folder where you copy the /data 
+directory and run_analysis.R script 
 
 4. Run run_analysis.R
 
@@ -29,10 +30,10 @@ the data as mentioned above and unzip it to i.e, Project/data directory.
    
    View(input)
    
-How does the run_analysis.R script work
-***************************************
+How does the run_analysis.R script works
+****************************************
 
-The run_analysis.R script does the following.
+The run_analysis.R script does the following
 
 1.Merges the training and the test sets to create one data set.
 
