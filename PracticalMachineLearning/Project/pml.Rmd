@@ -1,0 +1,143 @@
+---
+title: "Practical Machine Learning - Course Project: Writeup"
+author: "Intan Ismail"
+date: "Saturday, September 19, 2015"
+output: html_document
+---
+
+### Background
+
+Using devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible 
+to collect a large amount of data about personal activity relatively 
+inexpensively. These type of devices are part of the quantified self movement –
+a group of enthusiasts who take measurements about themselves regularly to 
+improve their health, to find patterns in their behavior, or because they are 
+tech geeks. One thing that people regularly do is quantify how much of a 
+particular activity they do, but they rarely quantify how well they do it. 
+
+In this project, we will be to use data from accelerometers on the belt, 
+forearm, arm, and dumbell of 6 participants. They were asked to perform barbell 
+lifts correctly and incorrectly in 5 different ways. More information is 
+available from the website here: http://groupware.les.inf.puc-rio.br/har 
+(see the section on the Weight Lifting Exercise Dataset). 
+
+### Data 
+
+The training data for this project are downloaded from here: 
+
+https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
+
+The test data are downloaded from here: 
+
+https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
+
+The data for this project come from this source: 
+http://groupware.les.inf.puc-rio.br/har. 
+
+### Loading and Processing Data 
+
+#### Load Weight Lifting Exercises Dataset
+
+```{r,cache=TRUE, warning=FALSE}
+# load the data
+train_ds <- read.csv("pml-training.csv", na.strings = c("NA", "#DIV/0!", ""))
+test_ds <- read.csv("pml-testing.csv", na.strings = c("NA", "#DIV/0!", ""))
+
+# cleanup the data
+train_ds <- train_ds[, colSums(is.na(train_ds)) == 0]
+test_ds <- test_ds[, colSums(is.na(test_ds)) == 0]
+```
+
+```{r}
+# get train dataset dimension
+dim(train_ds)
+```
+
+The train dataset has 19622 observations and 60 variables.
+
+```{r}
+# get test dataset dimension
+dim(test_ds)
+```
+
+The test dataset has 20 observations and 60 variables.
+
+#### Partition train dataset for analysis
+
+```{r}
+library(caret)
+set.seed(12345)
+inTrain <- createDataPartition(y = train_ds$classe,
+                             p = 0.7,
+                             list = FALSE)
+training <- train_ds[inTrain,]
+testing <- train_ds[-inTrain,]
+```
+
+#### Model Selection
+
+We use randon forest as our model for selection. From Wikipedia, Random forests 
+are an ensemble learning method for classification, regression and other tasks, 
+that operate by constructing a multitude of decision trees at training time and 
+outputting the class that is the mode of the classes (classification) or mean 
+prediction (regression) of the individual trees. Based on this and from accuracy 
+stand point this model will fit as a model for this project. 
+
+```{r}
+model_rf <- train(classe ~ ., data = training, method = "rf",
+                  tuneGrid = data.frame(mtry = 3),
+                  trControl = trainControl(method = "none"))
+model_rf
+```
+
+#### Model Validation
+
+We now test our model on the training and testing sets and perform cross 
+validatation.
+
+```{r}
+# Training set
+training_set <- predict(model_rf, training)
+print(confusionMatrix(training_set, training$classe))
+```
+
+Our model performs with highest accuracy against the training set but we need
+to cross validate against testing set to see if we have avoided overfitting. 
+
+```{r}
+# Testing set
+testing_set <- predict(model_rf, testing)
+print(confusionMatrix(testing_set, testing$classe))
+```
+
+The testing set accuracy is 99% with sample error of 1% which shows our model
+performs rather good.
+
+#### Test set prediction
+
+We now test the prediction of our algorithm on the test set.
+
+```{r}
+test_set <- predict(model_rf, test_ds)
+test_set
+```
+
+We then save and write the output to post it to the Course Project: Submission. 
+
+```{r}
+answers <- as.vector(test_set)
+
+pml_write_files = function(x) {
+    n = length(x)
+    for(i in 1:n) {
+        filename = paste0("problem_id_", i, ".txt")
+        write.table(x[i], 
+                    file = filename, 
+                    quote = FALSE, 
+                    row.names = FALSE, 
+                    col.names = FALSE)
+    }
+}
+
+pml_write_files(answers)
+```
