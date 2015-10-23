@@ -12,10 +12,12 @@ consumption and ten aspects of automobile design performance for 32 automobiles
 
 - In this analysis, we will look at the distribution of the fuel consumption 
 based on transmission types, number of cylinders and number of gears for 
-each models.
+each model.
 
 - Based on these factors, a distribution of gas mileages is plotted and a list 
-of automobiles models is displayed as a result.
+of automobile models is displayed as a result.
+
+- Sample code and plot are shown in the next two slides.
 
 List of manual transmission by gear
 ========================================================
@@ -87,3 +89,13 @@ Maserati Bora  5gears
 
 Conclusions
 ========================================================
+- For automatic transmission
+ - A model with eight cylinders shows the widest distribution of fuel 
+   consumption. 
+ - A model with three gears and fours gears show about the same distribution of 
+   the fuel consumption.
+- For manual transmission
+ - A model with four cylinders shows the widest distribution of the fuel 
+   consumption. 
+ - A model with four gears and five gears show about the same distribution of 
+   the fuel consumption.

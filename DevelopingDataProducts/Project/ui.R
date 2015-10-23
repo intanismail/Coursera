@@ -20,10 +20,10 @@ fluidPage(
       
       p("In this analysis, we will look at the distribution of the fuel 
       consumption based on transmission types, number of cylinders and number 
-      of gears for each models."),
+      of gears for each model."),
        
       p("Based on these factors, a distribution of gas mileages is plotted and 
-      a list of automobiles models is displayed as a result."),
+      a list of automobile models is displayed as a result."),
       
       br(),
       
